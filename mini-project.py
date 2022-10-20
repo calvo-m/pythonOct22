@@ -2,7 +2,7 @@
 import time
 
 # have a dictionary of ingredients and their associated meals
-breakfast_ingredients = ("oats")
+breakfast_ingredients = ("oats", "yogurt", "seeds")
 lunch_ingredients = ("tofu", "pepper", "potatoes", "lentils")
 snacks_ingredients = ("flour")
 #meals (find a way of storing these)
@@ -40,7 +40,7 @@ def mainMenu():
 
 def askIngredients(choice):
     # ask for user input on ingredients
-    print("Please, enter the name of the ingredients you have, \
+    print("Please, enter the name of the ingredients you have separated by a comma, \
 selecting from the list.")
     time.sleep(0.5)
     if choice == 1:
@@ -50,7 +50,7 @@ selecting from the list.")
     else:
         print(f"List of ingredients:  {snacks_ingredients}")
     user_ingredients = input()
-
+    user_ingredients = user_ingredients.split(", ")
     # iterate through the user ingredients, and alert of the ones that 
     # are not recognised
     findMeals(choice, user_ingredients)
@@ -60,14 +60,19 @@ def iterateMeals(meal_repo, ingredients_available):
     for meal, ingredients in meal_repo.items():
         allIngredientsPresent = True
         while allIngredientsPresent:
-            for ingredient in ingredients:
+            for ingredient_available in ingredients_available:
+                print(ingredient_available)
                 # search for it
-                for ingredient_available in ingredients_available:
+                for ingredient in ingredients:
+                    print(ingredient)
                     if ingredient == ingredient_available:
+                        #allIngredientsPresent = True
+                        print("found")
                         break
-                    else:
-                        continue
-                allIngredientsPresent = False
+                    allIngredientsPresent = False
+            break
+        if allIngredientsPresent:
+            mealsFound.append(meal)
     return mealsFound
 
 def findMeals(choice, ingredients):
